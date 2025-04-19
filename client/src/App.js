@@ -60,6 +60,25 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (gameStatus !== "inProgress") return;
+  
+      const key = event.key.toLowerCase();
+  
+      if (key === "enter" && guess.length === 5) {
+        submitGuess();
+      } else if (key === "backspace") {
+        setGuess((prev) => prev.slice(0, -1));
+      } else if (/^[a-z]$/.test(key) && guess.length < 5) {
+        setGuess((prev) => prev + key);
+      }
+    };
+  
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [guess, gameStatus, submitGuess]);
+
   const resetGame = () => {
     setGuesses([]);
     setGuess("");
