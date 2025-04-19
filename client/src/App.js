@@ -88,7 +88,7 @@ function App() {
   
   return (
     <div style={{ padding: "2rem" }}>
-      <h1>Wordle Guess Test</h1>
+      <h1 className="title">Wordle Clone</h1>
 
       {/* <input
         type="text"

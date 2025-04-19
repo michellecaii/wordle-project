@@ -1,3 +1,9 @@
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
 .board {
   display: grid;
   grid-template-rows: repeat(6, 1fr);
