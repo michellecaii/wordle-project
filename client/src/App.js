@@ -103,14 +103,23 @@ function App() {
 
     <div className="board">
       {[...Array(6)].map((_, rowIndex) => {
-        const entry = guesses[rowIndex] || { word: "", feedback: [] };
-        const letters = entry.word.padEnd(5).split("");
+        // const entry = guesses[rowIndex] || { word: "", feedback: [] };
+        // const letters = entry.word.padEnd(5).split("");
+
+        let entry = guesses[rowIndex];
+
+        // Show the current in-progress guess if it's the current row
+        if (!entry && rowIndex === guesses.length) {
+          entry = { word: guess, feedback: [] };
+        }
+
+        const letters = entry ? entry.word.padEnd(5).split("") : ["", "", "", "", ""];
 
         return (
           <div className="row" key={rowIndex}>
             {letters.map((char, colIndex) => (
               <div
-                className={`tile ${entry.feedback[colIndex] || ""}`}
+                className={`tile ${entry?.feedback?.[colIndex] || ""}`}
                 key={colIndex}
               >
                 {char.toUpperCase()}
