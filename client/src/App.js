@@ -90,7 +90,7 @@ function App() {
     <div style={{ padding: "2rem" }}>
       <h1>Wordle Guess Test</h1>
 
-      <input
+      {/* <input
         type="text"
         value={guess}
         maxLength={5}
@@ -99,7 +99,7 @@ function App() {
       />
       <button onClick={submitGuess} style={{ marginLeft: "1rem" }}>
         Submit
-      </button>
+      </button> */}
 
     <div className="board">
       {[...Array(6)].map((_, rowIndex) => {
