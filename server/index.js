@@ -1,6 +1,7 @@
 const compareGuess = require("./compareWords");
 const express = require("express");
 const cors = require("cors");
+const words = require("./words");
 
 const app = express();
 app.use(cors());
@@ -18,6 +19,12 @@ app.post("/guess", (req, res) => {
   const result = compareGuess(guess.toLowerCase(), WORD);
   console.log(`Guess: ${guess} → ${result.join(", ")}`);
   res.json({ result });
+});
+
+app.get("/word", (req, res) => {
+  const randomIndex = Math.floor(Math.random() * words.length);
+  const word = words[randomIndex];
+  res.json({ word });
 });
 
 const PORT = 5050;

@@ -30,6 +30,13 @@ function App() {
     }
   };
 
+  const resetGame = () => {
+    setGuesses([]);
+    setGuess("");
+    setGameStatus("inProgress");
+  };
+  
+
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Wordle Guess Test</h1>
@@ -67,8 +74,22 @@ function App() {
         Sorry, better luck next time. The word was: PARTY
       </h2>
     )}
+    {(gameStatus === "won" || gameStatus === "lost") && (
+    <button
+      onClick={resetGame}
+      style={{
+        marginTop: "1rem",
+        padding: "0.5rem 1rem",
+        fontSize: "16px",
+        cursor: "pointer"
+      }}
+    >
+    Play Again!
+    </button>
+    )}
 
     </div>
+    
   );
 }
 export default App;
