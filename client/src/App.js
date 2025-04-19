@@ -11,25 +11,6 @@ function App() {
     fetchNewWord();
   }, []);
 
-  // useEffect(() => {
-  //   const handleKeyDown = (event) => {
-  //     if (gameStatus !== "inProgress") return;
-  
-  //     const key = event.key.toLowerCase();
-  
-  //     if (key === "enter" && guess.length === 5) {
-  //       submitGuess();
-  //     } else if (key === "backspace") {
-  //       setGuess((prev) => prev.slice(0, -1));
-  //     } else if (/^[a-z]$/.test(key) && guess.length < 5) {
-  //       setGuess((prev) => prev + key);
-  //     }
-  //   };
-  
-  //   window.addEventListener("keydown", handleKeyDown);
-  //   return () => window.removeEventListener("keydown", handleKeyDown);
-  // }, [guess, gameStatus, submitGuess]);
-
   const fetchNewWord = async () => {
     const response = await fetch("http://localhost:5050/word");
     const data = await response.json();
@@ -67,6 +48,18 @@ function App() {
     }
   };
 
+  const handleKeyPress = (key) => {
+    if (gameStatus !== "inProgress") return;
+  
+    if (key === "ENTER" && guess.length === 5) {
+      submitGuess();
+    } else if (key === "⌫") {
+      setGuess((prev) => prev.slice(0, -1));
+    } else if (/^[A-Z]$/.test(key) && guess.length < 5) {
+      setGuess((prev) => prev + key.toLowerCase());
+    }
+  };
+
   const resetGame = () => {
     setGuesses([]);
     setGuess("");
@@ -74,7 +67,6 @@ function App() {
     fetchNewWord();
   };
   
-
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Wordle Guess Test</h1>
@@ -107,8 +99,25 @@ function App() {
             ))}
           </div>
         );
-      })}
-</div>
+      })} 
+    </div>
+    
+    <div className="keyboard">
+    {["QWERTYUIOP", "ASDFGHJKL", "ENTERZXCVBNM⌫"].map((row, rowIndex) => (
+      <div className="keyboard-row" key={rowIndex}>
+        {row.split("").map((key) => (
+          <button
+            key={key}
+            className="key"
+            onClick={() => handleKeyPress(key)}
+          >
+            {key}
+          </button>
+        ))}
+      </div>
+    ))}
+    </div>
+
       {gameStatus === "won" && (
       <h2 style={{ color: "green", marginTop: "1rem" }}>Good job! You guessed it!</h2>
     )}
