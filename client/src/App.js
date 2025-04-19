@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import "./App.css";
 
 function App() {
@@ -10,6 +10,25 @@ function App() {
   useEffect(() => {
     fetchNewWord();
   }, []);
+
+  // useEffect(() => {
+  //   const handleKeyDown = (event) => {
+  //     if (gameStatus !== "inProgress") return;
+  
+  //     const key = event.key.toLowerCase();
+  
+  //     if (key === "enter" && guess.length === 5) {
+  //       submitGuess();
+  //     } else if (key === "backspace") {
+  //       setGuess((prev) => prev.slice(0, -1));
+  //     } else if (/^[a-z]$/.test(key) && guess.length < 5) {
+  //       setGuess((prev) => prev + key);
+  //     }
+  //   };
+  
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   return () => window.removeEventListener("keydown", handleKeyDown);
+  // }, [guess, gameStatus, submitGuess]);
 
   const fetchNewWord = async () => {
     const response = await fetch("http://localhost:5050/word");
@@ -71,20 +90,25 @@ function App() {
         Submit
       </button>
 
-      <div className="board">
-        {guesses.map((entry, rowIndex) => (
+    <div className="board">
+      {[...Array(6)].map((_, rowIndex) => {
+        const entry = guesses[rowIndex] || { word: "", feedback: [] };
+        const letters = entry.word.padEnd(5).split("");
+
+        return (
           <div className="row" key={rowIndex}>
-            {entry.word.split("").map((char, colIndex) => (
+            {letters.map((char, colIndex) => (
               <div
-                className={`tile ${entry.feedback[colIndex]}`}
+                className={`tile ${entry.feedback[colIndex] || ""}`}
                 key={colIndex}
               >
                 {char.toUpperCase()}
               </div>
             ))}
           </div>
-        ))}
-      </div>
+        );
+      })}
+</div>
       {gameStatus === "won" && (
       <h2 style={{ color: "green", marginTop: "1rem" }}>Good job! You guessed it!</h2>
     )}
