@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import "./App.css";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
     setSolution(data.word.toLowerCase());
   };
 
-  const submitGuess = async () => {
+  const submitGuess = useCallback(async () => {
     if (guess.length !== 5 || gameStatus !== "inProgress") return;
 
     const response = await fetch("http://localhost:5050/guess", {
@@ -46,7 +46,7 @@ function App() {
     } else if (newGuesses.length >= 6){
       setGameStatus("lost");
     }
-  };
+  }, [guess, gameStatus, solution, guesses]);
 
   const handleKeyPress = (key) => {
     if (gameStatus !== "inProgress") return;
