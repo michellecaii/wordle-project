@@ -5,6 +5,13 @@ function App() {
   const [guess, setGuess] = useState("");
   const [guesses, setGuesses] = useState([]); // array of { word: string, feedback: string[] }
   const [gameStatus, setGameStatus] = useState("inProgress");
+  const [solution, setSolution] = useState("");
+
+  const fetchNewWord = async () => {
+    const response = await fetch("http://localhost:5050/word");
+    const data = await response.json();
+    setSolution(data.word.toLowerCase());
+  };
 
   const submitGuess = async () => {
     if (guess.length !== 5 || gameStatus !== "inProgress") return;
@@ -12,7 +19,7 @@ function App() {
     const response = await fetch("http://localhost:5050/guess", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ guess })
+      body: JSON.stringify({ guess, solution })
     });
 
     const data = await response.json();

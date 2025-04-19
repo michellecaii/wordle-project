@@ -7,17 +7,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const WORD = "party"; // hardcoded for now
-
 app.post("/guess", (req, res) => {
-  const { guess } = req.body;
+  const { guess, solution } = req.body;
 
-  if (!guess || guess.length !== 5) {
-    return res.status(400).json({ error: "Invalid guess" });
+  if (
+    !guess || !solution ||
+    guess.length !== 5 ||
+    solution.length !== 5
+  ) {
+    return res.status(400).json({ error: "Invalid input" });
   }
 
-  const result = compareGuess(guess.toLowerCase(), WORD);
-  console.log(`Guess: ${guess} → ${result.join(", ")}`);
+  const result = compareGuess(guess.toLowerCase(), solution.toLowerCase());
+  console.log(`Guess: ${guess} vs ${solution} → ${result.join(", ")}`);
   res.json({ result });
 });
 
