@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -6,6 +6,10 @@ function App() {
   const [guesses, setGuesses] = useState([]); // array of { word: string, feedback: string[] }
   const [gameStatus, setGameStatus] = useState("inProgress");
   const [solution, setSolution] = useState("");
+
+  useEffect(() => {
+    fetchNewWord();
+  }, []);
 
   const fetchNewWord = async () => {
     const response = await fetch("http://localhost:5050/word");
@@ -23,10 +27,17 @@ function App() {
     });
 
     const data = await response.json();
+
+    // Defensive check
+  if (!data.result || !Array.isArray(data.result)) {
+    console.error("Invalid backend response:", data);
+    return;
+  }
+
     const newEntry = { word: guess, feedback: data.result };
     const newGuesses = [...guesses, newEntry];
 
-    setGuesses([...guesses, { word: guess, feedback: data.result }]);
+    setGuesses(newGuesses);
     setGuess(""); // reset input
 
     //Check win condition
@@ -41,6 +52,7 @@ function App() {
     setGuesses([]);
     setGuess("");
     setGameStatus("inProgress");
+    fetchNewWord();
   };
   
 
@@ -78,7 +90,7 @@ function App() {
     )}
     {gameStatus === "lost" && (
       <h2 style={{ color: "red", marginTop: "1rem" }}>
-        Sorry, better luck next time. The word was: PARTY
+        Sorry, better luck next time. The word was: {solution.toUpperCase()}
       </h2>
     )}
     {(gameStatus === "won" || gameStatus === "lost") && (
