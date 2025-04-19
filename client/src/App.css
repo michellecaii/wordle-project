@@ -100,5 +100,5 @@
 }
 
 .tile.flip {
-  animation: flip 0.6s ease-in-out forwards;
+  animation: flip 0.9s ease-in-out forwards;
 }
