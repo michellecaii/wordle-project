@@ -117,14 +117,20 @@ function App() {
 
         return (
           <div className="row" key={rowIndex}>
-            {letters.map((char, colIndex) => (
-              <div
-                className={`tile ${entry?.feedback?.[colIndex] || ""}`}
-                key={colIndex}
-              >
-                {char.toUpperCase()}
-              </div>
-            ))}
+            {letters.map((char, colIndex) => {
+              const isRevealed = entry?.feedback?.[colIndex];
+              const delay = isRevealed ? `${colIndex * 300}ms` : "0ms";
+
+              return (
+                <div
+                  className={`tile ${isRevealed ? "flip " + isRevealed : ""}`}
+                  style={{ animationDelay: delay }}
+                  key={colIndex}
+                >
+                  {char.toUpperCase()}
+                </div>
+              );
+            })}
           </div>
         );
       })} 
