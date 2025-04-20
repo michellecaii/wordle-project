@@ -118,9 +118,7 @@ function App() {
     return (
       <div className="row" key={rowIndex}>
         {letters.map((char, colIndex) => {
-          const color = entry.feedback[colIndex];           // safe: entry always has .feedback
-          const flipClass = color ? "flip" : "";
-          const delay = color ? `${colIndex * FLIP_DURATION}ms` : "0ms";
+          const color = entry.feedback[colIndex];           // safe: entry always 
 
           return (
             <div
@@ -153,15 +151,21 @@ function App() {
     ))}
     </div>
 
-      {gameStatus === "won" && (
-      <h2 style={{ color: "green", marginTop: "1rem" }}>Good job! You guessed it!</h2>
-    )}
-    {gameStatus === "lost" && (
-      <h2 style={{ color: "red", marginTop: "1rem" }}>
-        Sorry, better luck next time. The word was: {solution.toUpperCase()}
-      </h2>
-    )}
     {(gameStatus === "won" || gameStatus === "lost") && (
+  <div className="popup-overlay">
+    <div className="popup">
+      <h2 className={gameStatus === "won" ? "popup-win" : "popup-lose"}>
+        {gameStatus === "won"
+          ? "You guessed it!"
+          : `Sorry, better luck next time. The word was: ${solution.toUpperCase()}`}
+      </h2>
+      <button onClick={resetGame} className="popup-button">
+        Play Again!
+      </button>
+    </div>
+  </div>
+)}
+    {/* {(gameStatus === "won" || gameStatus === "lost") && (
     <button
       onClick={resetGame}
       style={{
@@ -173,7 +177,7 @@ function App() {
     >
     Play Again!
     </button>
-    )}
+    )} */}
 
     </div>
     
