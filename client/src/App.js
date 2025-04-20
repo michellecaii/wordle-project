@@ -6,10 +6,6 @@ function App() {
   const [guesses, setGuesses] = useState([]); // array of { word: string, feedback: string[] }
   const [gameStatus, setGameStatus] = useState("inProgress");
   const [solution, setSolution] = useState("");
-  const [revealedFeedback, setRevealedFeedback] = useState([]);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const FLIP_DURATION = 600;
 
   useEffect(() => {
     fetchNewWord();
@@ -40,11 +36,9 @@ function App() {
   }
 
     const newEntry = { word: guess, feedback: data.result };
-    setGuesses([...guesses, newEntry]); 
-
     const newGuesses = [...guesses, newEntry];
-
     setGuesses(newGuesses);
+
     setGuess(""); // reset input
 
     //Check win condition
@@ -57,7 +51,7 @@ function App() {
   }, [guess, gameStatus, solution, guesses]);
 
   const handleKeyPress = (key) => {
-    if (isAnimating || gameStatus !== "inProgress") return;
+    if (gameStatus !== "inProgress") return;
   
     if (key === "ENTER" && guess.length === 5) {
       submitGuess();
@@ -165,20 +159,6 @@ function App() {
     </div>
   </div>
 )}
-    {/* {(gameStatus === "won" || gameStatus === "lost") && (
-    <button
-      onClick={resetGame}
-      style={{
-        marginTop: "1rem",
-        padding: "0.5rem 1rem",
-        fontSize: "16px",
-        cursor: "pointer"
-      }}
-    >
-    Play Again!
-    </button>
-    )} */}
-
     </div>
     
   );
