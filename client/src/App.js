@@ -12,7 +12,7 @@ function App() {
   }, []);
 
   const fetchNewWord = async () => {
-    const response = await fetch("http://localhost:5050/word");
+    const response = await fetch("https://wordle-project-backend.onrender.com/word");
     const data = await response.json();
     setSolution(data.word.toLowerCase());
   };
@@ -21,7 +21,7 @@ function App() {
     
     if (guess.length !== 5 || gameStatus !== "inProgress") return;
 
-    const response = await fetch("http://localhost:5050/guess", {
+    const response = await fetch("https://wordle-project-backend.onrender.com/guess", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ guess, solution })
