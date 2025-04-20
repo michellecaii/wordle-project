@@ -130,7 +130,7 @@ function App() {
 </div>
 
     <div className="keyboard">
-    {["QWERTYUIOP", "ASDFGHJKL", "ENTERZXCVBNM⌫"].map((row, rowIndex) => (
+    {["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM⌫"].map((row, rowIndex) => (
       <div className="keyboard-row" key={rowIndex}>
         {row.split("").map((key) => (
           <button
