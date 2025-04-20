@@ -130,12 +130,16 @@ function App() {
 </div>
 
     <div className="keyboard">
-    {["QWERTYUIOP", "ASDFGHJKL", "ENTERZXCVBNM⌫"].map((row, rowIndex) => (
+    {[
+    "QWERTYUIOP",
+    "ASDFGHJKL",
+    ["ENTER", ..."ZXCVBNM", "⌫"]
+  ].map((row, rowIndex) => (
       <div className="keyboard-row" key={rowIndex}>
-        {row.split("").map((key) => (
+        {(Array.isArray(row) ? row : row.split("")).map((key) => (
           <button
             key={key}
-            className={`key ${key === "ENTER" ? "enter" : ""}`}
+            className={`key ${key === "ENTER" ? "enter" : ""} ${key === "⌫" ? "delete" : ""}`}
             onClick={() => handleKeyPress(key)}
           >
             {key}
