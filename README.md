@@ -39,7 +39,7 @@ This is a fullstack clone of the classic Wordle game, built with **React** on th
 - End-of-game popup with "Play Again" option
 
 ### 🔁 Word Logic
-- Fetches a **random valid 5-letter word** from the backend on each game start from this Github Repository [https://github.com/tabatkins/wordle-list/blob/main/words] taken straight from Wordle's game code
+- Fetches a **random valid 5-letter word** from the backend on each game start from this [this GitHub repository](https://github.com/tabatkins/wordle-list/blob/main/words), taken straight from Wordle's game code
 - Backend handles validation and feedback logic
 
 ### 🧠 UX & Design
