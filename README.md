@@ -1,4 +1,4 @@
-# 🟩 Wordle Clone — Fullstack Web App 🎉
+# 🟩 Wordle Clone
 
 This is a fullstack clone of the classic Wordle game, built with **React** on the frontend and **Express (Node.js)** on the backend. It replicates the core gameplay mechanics including color-coded feedback, virtual keyboard input, and random word generation.
 
@@ -7,10 +7,17 @@ This is a fullstack clone of the classic Wordle game, built with **React** on th
 ## 📸 Preview
 
 ### 🕹️ Start Screen
+
+<p align="center">
+  <img src="./assets/screenshot-empty.png" alt="Start Screenshot" width="400"/>
+</p>
+
 ![Start Screen](./assets/screenshot-empty.png)
 
 ### 🎯 Gameplay Example
-![Gameplay Example](./assets/screenshot-gameplay.png)
+<p align="center">
+  <img src="./assets/screenshot-gameplay.png" alt="Gameplay Screenshot" width="400"/>
+</p>
 
 
 ---
@@ -22,7 +29,7 @@ This is a fullstack clone of the classic Wordle game, built with **React** on th
 
 ---
 
-## ✨ Features
+## Features
 
 ### 🎮 Game Mechanics
 - Guess a 5-letter word within 6 tries
@@ -31,11 +38,10 @@ This is a fullstack clone of the classic Wordle game, built with **React** on th
   - 🟨 **Yellow**: Correct letter in wrong position
   - ⬛ **Gray**: Letter not in the word
 - Virtual keyboard input
-- Disables interaction during animation
 - End-of-game popup with "Play Again" option
 
 ### 🔁 Word Logic
-- Fetches a **random valid 5-letter word** from the backend on each game start
+- Fetches a **random valid 5-letter word** from the backend on each game start from this Github Repository [https://github.com/tabatkins/wordle-list/blob/main/words] taken straight from Wordle's game code
 - Backend handles validation and feedback logic
 
 ### 🧠 UX & Design
