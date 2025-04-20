@@ -12,8 +12,6 @@ This is a fullstack clone of the classic Wordle game, built with **React** on th
   <img src="./assets/screenshot-empty.png" alt="Start Screenshot" width="400"/>
 </p>
 
-![Start Screen](./assets/screenshot-empty.png)
-
 ### 🎯 Gameplay Example
 <p align="center">
   <img src="./assets/screenshot-gameplay.png" alt="Gameplay Screenshot" width="400"/>
@@ -24,7 +22,7 @@ This is a fullstack clone of the classic Wordle game, built with **React** on th
 
 ## 🌐 Live Demo
 
-- **Frontend (Vercel)**: [https://your-vercel-site.vercel.app](https://your-vercel-site.vercel.app)
+- **Frontend (Vercel)**: [https://wordle-project-blue.vercel.app/](https://wordle-project-blue.vercel.app/)
 - **Backend (Render)**: [https://wordle-project-backend.onrender.com](https://wordle-project-backend.onrender.com)
 
 ---
