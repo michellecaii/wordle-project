@@ -138,3 +138,7 @@
 .popup-button:hover {
   background-color: #2c2c2e;
 }
+
+.key.enter {
+  flex: 1.5; /* Make it wider */
+}
