@@ -16,6 +16,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
+  
 }
 
 .tile {
@@ -33,17 +34,17 @@
 }
 
 /* Feedback states */
-.green {
+.tile[data-color="green"] {
   background-color: #538d4e;
   border: none;
 }
 
-.yellow {
+.tile[data-color="yellow"] {
   background-color: #b59f3b;
   border: none;
 }
 
-.gray {
+.tile[data-color="gray"] {
   background-color: #3a3a3c;
   border: none;
 }
@@ -61,6 +62,7 @@
   gap: 6px;
 }
 
+
 .key {
   background-color: #818384;
   color: white;
@@ -72,26 +74,18 @@
   cursor: pointer;
   text-transform: uppercase;
   font-size: 14px;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.05s;
+  user-select: none;
 }
 
 .key:hover {
   background-color: #a4a6a8;
 }
 
-@keyframes flip {
-  0% {
-    transform: rotateX(0deg);
-  }
-  50% {
-    transform: rotateX(90deg);
-    background-color: #121213;
-    color: white;
-  }
-  100% {
-    transform: rotateX(0deg);
-  }
+.key:focus {
+  outline: none;
 }
+
 
 .tile {
   transition: background-color 0.3s;
@@ -99,6 +93,5 @@
   backface-visibility: hidden;
 }
 
-.tile.flip {
-  animation: flip 0.9s ease-in-out forwards;
-}
+  animation: flip 0.6s ease-in-out forwards;
+} */

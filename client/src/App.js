@@ -6,6 +6,10 @@ function App() {
   const [guesses, setGuesses] = useState([]); // array of { word: string, feedback: string[] }
   const [gameStatus, setGameStatus] = useState("inProgress");
   const [solution, setSolution] = useState("");
+  const [revealedFeedback, setRevealedFeedback] = useState([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const FLIP_DURATION = 600;
 
   useEffect(() => {
     fetchNewWord();
@@ -18,6 +22,7 @@ function App() {
   };
 
   const submitGuess = useCallback(async () => {
+    
     if (guess.length !== 5 || gameStatus !== "inProgress") return;
 
     const response = await fetch("http://localhost:5050/guess", {
@@ -35,6 +40,8 @@ function App() {
   }
 
     const newEntry = { word: guess, feedback: data.result };
+    setGuesses([...guesses, newEntry]); 
+
     const newGuesses = [...guesses, newEntry];
 
     setGuesses(newGuesses);
@@ -46,10 +53,11 @@ function App() {
     } else if (newGuesses.length >= 6){
       setGameStatus("lost");
     }
+
   }, [guess, gameStatus, solution, guesses]);
 
   const handleKeyPress = (key) => {
-    if (gameStatus !== "inProgress") return;
+    if (isAnimating || gameStatus !== "inProgress") return;
   
     if (key === "ENTER" && guess.length === 5) {
       submitGuess();
@@ -90,52 +98,45 @@ function App() {
     <div style={{ padding: "2rem" }}>
       <h1 className="title">Wordle Clone</h1>
 
-      {/* <input
-        type="text"
-        value={guess}
-        maxLength={5}
-        onChange={(e) => setGuess(e.target.value)}
-        style={{ fontSize: "18px", textTransform: "uppercase" }}
-      />
-      <button onClick={submitGuess} style={{ marginLeft: "1rem" }}>
-        Submit
-      </button> */}
 
-    <div className="board">
-      {[...Array(6)].map((_, rowIndex) => {
-        // const entry = guesses[rowIndex] || { word: "", feedback: [] };
-        // const letters = entry.word.padEnd(5).split("");
+<div className="board">
+  {[...Array(6)].map((_, rowIndex) => {
+    let entry;
+    if (rowIndex < guesses.length) {
+      // a submitted guess
+      entry = guesses[rowIndex];
+    } else if (rowIndex === guesses.length) {
+      // the in‑progress guess
+      entry = { word: guess, feedback: [] };
+    } else {
+      // future empty rows
+      entry = { word: "", feedback: [] };
+    }
 
-        let entry = guesses[rowIndex];
+    const letters = entry.word.padEnd(5).split("");
 
-        // Show the current in-progress guess if it's the current row
-        if (!entry && rowIndex === guesses.length) {
-          entry = { word: guess, feedback: [] };
-        }
+    return (
+      <div className="row" key={rowIndex}>
+        {letters.map((char, colIndex) => {
+          const color = entry.feedback[colIndex];           // safe: entry always has .feedback
+          const flipClass = color ? "flip" : "";
+          const delay = color ? `${colIndex * FLIP_DURATION}ms` : "0ms";
 
-        const letters = entry ? entry.word.padEnd(5).split("") : ["", "", "", "", ""];
+          return (
+            <div
+              className="tile"
+              data-color={color || ""}
+              key={colIndex}
+            >
+              {char.toUpperCase()}
+            </div>
+          );
+        })}
+      </div>
+    );
+  })}
+</div>
 
-        return (
-          <div className="row" key={rowIndex}>
-            {letters.map((char, colIndex) => {
-              const isRevealed = entry?.feedback?.[colIndex];
-              const delay = isRevealed ? `${colIndex * 300}ms` : "0ms";
-
-              return (
-                <div
-                  className={`tile ${isRevealed ? "flip " + isRevealed : ""}`}
-                  style={{ animationDelay: delay }}
-                  key={colIndex}
-                >
-                  {char.toUpperCase()}
-                </div>
-              );
-            })}
-          </div>
-        );
-      })} 
-    </div>
-    
     <div className="keyboard">
     {["QWERTYUIOP", "ASDFGHJKL", "ENTERZXCVBNM⌫"].map((row, rowIndex) => (
       <div className="keyboard-row" key={rowIndex}>
